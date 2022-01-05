@@ -15,21 +15,17 @@ const schema = yup.object().shape({
 export const AddField = ({dispatch}) => {
 
   const [checked, setChecked] = useState(false);
-  const [id, setId] = useState(1);
 
-  const defaultValues = {
-    active: false,
-    text: ''
-  };
-  
   const { register, handleSubmit, reset, formState:{ errors } } = useForm({
-    defaultValues,
+    defaultValues: {
+      active: false,
+      text: ''
+    },
     resolver: yupResolver(schema),
   });
 
   const onSubmit = data => {
-    setId(prev => prev + 1);
-    dispatch({type: 'ADD_TASK', payload: {...data, id}});
+    dispatch({type: 'ADD_TASK', payload: data});
     reset();
     setChecked(false);
   };

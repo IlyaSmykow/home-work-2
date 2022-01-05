@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import { Paper, Divider, Button, List, Tabs, Tab } from '@mui/material';
 import { AddField } from './components/AddField';
 import { Item } from './components/Item';
@@ -25,7 +25,12 @@ function App() {
         <Divider />
         <List>
           {
-            state.length > 0 ? state.map(task => <Item key={task.id} text={task.text} checked={task.active}/>)
+            state.length > 0 ? state.map(task => <Item 
+                                                    key={task.id} 
+                                                    id={task.id}
+                                                    text={task.text} 
+                                                    checked={task.active}
+                                                    dispatch={dispatch} />)
             : <p className="list-none">Список задач пуст</p>
           }
         </List>

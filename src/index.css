@@ -15,6 +15,10 @@ h4 {
   padding-top: 40px;
 }
 
+.list-none {
+  text-align: center;
+}
+
 .wrapper {
   width: 530px;
   margin: 0 auto;

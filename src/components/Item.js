@@ -6,12 +6,22 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { useState } from 'react';
 
 
-export const Item = ({ text, checked }) => {
+export const Item = ({ id, text, checked, dispatch }) => {
 
   const [completed, setCompleted] = useState(checked);
 
   const handleCheckbox = () => {
     setCompleted(!completed);
+  };
+
+  const deleteTask = id => {
+    const answer = window.confirm("Вы точно хотите удалить запись?");
+    if(answer) {
+      dispatch({
+        type: 'DELETE_TASK',
+        payload: id
+      });
+    }
   };
 
   return (
@@ -28,7 +38,7 @@ export const Item = ({ text, checked }) => {
           <IconButton>
             <EditIcon style={{ fontSize: 20 }} />
           </IconButton>
-          <IconButton>
+          <IconButton onClick={() => deleteTask(id)}>
             <DeleteOutlineIcon style={{ fontSize: 20 }} />
           </IconButton>
         </div>
