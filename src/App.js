@@ -1,23 +1,45 @@
-import logo from './logo.svg';
-import './App.css';
+// import './App.css';
+import { Paper, Divider, Button, List, Tabs, Tab } from '@mui/material';
+import { AddField } from './components/AddField';
+import { Item } from './components/Item';
+import { useReducer } from 'react';
+import { reducer } from './components/reducer';
+
 
 function App() {
+  const [state, dispatch] = useReducer(reducer, []);  
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Paper className="wrapper">
+        <Paper className="header" elevation={0}>
+          <h4>Список задач</h4>
+        </Paper>
+        <AddField dispatch={dispatch}/>
+        <Divider />
+        <Tabs value={0}>
+          <Tab label="Все" />
+          <Tab label="Активные" />
+          <Tab label="Завершённые" />
+        </Tabs>
+        <Divider />
+        <List>
+          {
+            state.length > 0 ? state.map(task => <Item 
+                                                    key={task.id} 
+                                                    id={task.id}
+                                                    text={task.text} 
+                                                    checked={task.active}
+                                                    dispatch={dispatch} />)
+            : <p className="list-none">Список задач пуст</p>
+          }
+        </List>
+        <Divider />
+        <div className="check-buttons">
+          <Button>Отметить всё</Button>
+          <Button>Очистить</Button>
+        </div>
+      </Paper>
     </div>
   );
 }
