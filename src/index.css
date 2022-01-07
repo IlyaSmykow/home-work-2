@@ -99,4 +99,9 @@ h4 {
   color: #f53f3f;
   text-transform: lowercase;
   font-size: 15px;
+  height: 30px;
+}
+
+.tab-panel {
+  color: red;
 }

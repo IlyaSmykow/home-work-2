@@ -1,13 +1,34 @@
-// import './App.css';
-import { Paper, Divider, Button, List, Tabs, Tab } from '@mui/material';
-import { AddField } from './components/AddField';
-import { Item } from './components/Item';
-import { useReducer } from 'react';
-import { reducer } from './components/reducer';
-
+import { Paper, Divider, Button } from "@mui/material";
+import { AddField } from "./components/AddField";
+import { useState, useReducer } from "react";
+import { reducer } from "./components/reducer";
+import TabComponent from "./components/TabComponent";
 
 function App() {
-  const [state, dispatch] = useReducer(reducer, []);  
+  const [state, dispatch] = useReducer(reducer, []);
+  const [checkBtn, setCheckBtn] = useState(false);
+
+  const checkAll = () => {
+    setCheckBtn(true);
+    dispatch({
+      type: "COMPLETE_ALL",
+    });
+  };
+
+  const unCheckAll = () => {
+    setCheckBtn(false);
+    dispatch({
+      type: "RESET_ALL",
+    });
+  };
+
+  const removeAll = () => {
+    if (window.confirm("Удалить все записи?")) {
+      dispatch({
+        type: "REMOVE_ALL",
+      });
+    }
+  };
 
   return (
     <div className="App">
@@ -15,29 +36,18 @@ function App() {
         <Paper className="header" elevation={0}>
           <h4>Список задач</h4>
         </Paper>
-        <AddField dispatch={dispatch}/>
+        <AddField dispatch={dispatch} />
         <Divider />
-        <Tabs value={0}>
-          <Tab label="Все" />
-          <Tab label="Активные" />
-          <Tab label="Завершённые" />
-        </Tabs>
+        <TabComponent state={state} dispatch={dispatch} />
         <Divider />
-        <List>
-          {
-            state.length > 0 ? state.map(task => <Item 
-                                                    key={task.id} 
-                                                    id={task.id}
-                                                    text={task.text} 
-                                                    checked={task.active}
-                                                    dispatch={dispatch} />)
-            : <p className="list-none">Список задач пуст</p>
-          }
-        </List>
         <Divider />
         <div className="check-buttons">
-          <Button>Отметить всё</Button>
-          <Button>Очистить</Button>
+          {checkBtn ? (
+            <Button onClick={unCheckAll}>Снять отметки</Button>
+          ) : (
+            <Button onClick={checkAll}>Отметить всё</Button>
+          )}
+          <Button onClick={removeAll}>Очистить</Button>
         </div>
       </Paper>
     </div>
