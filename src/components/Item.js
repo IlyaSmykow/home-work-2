@@ -1,25 +1,22 @@
-import { IconButton, Checkbox, ListItem, Typography } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
-import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import { useState } from 'react';
-
+import { IconButton, Checkbox, ListItem, Typography } from "@mui/material";
+import EditIcon from "@mui/icons-material/Edit";
+import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 
 export const Item = ({ id, text, checked, dispatch }) => {
-
-  const [completed, setCompleted] = useState(checked);
-
-  const handleCheckbox = () => {
-    setCompleted(!completed);
+  const handleCheckbox = (id) => {
+    dispatch({
+      type: "TOGGLE_COMPLETE",
+      payload: id,
+    });
   };
 
-  const deleteTask = id => {
-    const answer = window.confirm("Вы точно хотите удалить запись?");
-    if(answer) {
+  const deleteTask = (id) => {
+    if (window.confirm("Удалить запись?")) {
       dispatch({
-        type: 'DELETE_TASK',
-        payload: id
+        type: "DELETE_TASK",
+        payload: id,
       });
     }
   };
@@ -27,11 +24,11 @@ export const Item = ({ id, text, checked, dispatch }) => {
   return (
     <ListItem>
       <div className="d-flex item">
-        <Checkbox 
-          onChange={handleCheckbox}
-          checked={completed}
-          icon={<RadioButtonUncheckedIcon />} 
-          checkedIcon={<CheckCircleIcon />} 
+        <Checkbox
+          onChange={() => handleCheckbox(id)}
+          checked={checked}
+          icon={<RadioButtonUncheckedIcon />}
+          checkedIcon={<CheckCircleIcon />}
         />
         <Typography className="item-text">{text}</Typography>
         <div className="item-buttons d-flex">
