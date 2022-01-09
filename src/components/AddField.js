@@ -6,6 +6,8 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { useDispatch } from "react-redux";
+import { addTask } from "./redux/actions/tasksActions";
 
 const schema = yup
   .object()
@@ -14,8 +16,9 @@ const schema = yup
   })
   .required();
 
-export const AddField = ({ dispatch }) => {
+export const AddField = () => {
   const [checked, setChecked] = useState(false);
+  const dispatch = useDispatch();
 
   const {
     register,
@@ -31,7 +34,7 @@ export const AddField = ({ dispatch }) => {
   });
 
   const onSubmit = (data) => {
-    dispatch({ type: "ADD_TASK", payload: data });
+    dispatch(addTask(data.text, data.checked));
     reset();
     setChecked(false);
   };

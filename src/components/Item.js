@@ -3,8 +3,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
 import RadioButtonUncheckedIcon from "@mui/icons-material/RadioButtonUnchecked";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import { useDispatch } from "react-redux";
 
-export const Item = ({ id, text, checked, dispatch }) => {
+export const Item = ({ id, checked, text }) => {
+  const dispatch = useDispatch();
   const handleCheckbox = (id) => {
     dispatch({
       type: "TOGGLE_COMPLETE",
